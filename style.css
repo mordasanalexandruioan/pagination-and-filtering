@@ -11,6 +11,7 @@ body {
     position: relative;
     background-color: rgb(229, 238, 250);
     font-family: sans-serif;
+    margin: 0;
 }
 
 header {
@@ -71,6 +72,7 @@ label {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    max-width: 290px;
 }
 
 .card {
@@ -138,9 +140,11 @@ input[type="text"] {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 95%;
+    top: 13px;
     left: -63px;
     z-index: 2;
+    padding: 0;
+    list-style: none;
 }
 
 .option {
@@ -230,21 +234,119 @@ input[type="text"]::placeholder {
     font-size: .95rem;
 }
 
-.pageCount {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    list-style: none;
-}
-
-.buttonCount {
+.button {
     background-color: white;
     padding: 3px 6px 2px;
     border-radius: .2em;
     color: rgb(59, 143, 255);
     box-shadow: 0 0 4px rgba(189, 189, 189, 0.698);
     border: none;
-    margin-left: .6em;
+    margin: .3em;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.363);
+}
+
+.modal .card {
+    position: relative;
+}
+
+#closeCard,
+.arrowsSection {
+    position: absolute;
+}
+
+#closeCard {
+    top: 3px;
+    right: 3px;
+    background-color: transparent;
+    border: solid 1px rgba(192, 192, 192, 0.63);
+    border-radius: .4em;
+    color: rgba(82, 82, 82, 0.575);
+    padding: .2em .6em .3em;
+    transition: background-color .3s, color .3s;
+}
+
+#closeCard:hover {
+    background-color: rgba(212, 0, 0, 0.808);
+    color: white;
+}
+
+.arrowsSection {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    top: calc(55% - 26.33px);
+}
+
+#next,
+#prev {
+    background-color: transparent;
+    border: solid 1px rgba(192, 192, 192, 0.63);
+    border-radius: 50%;
+    color: rgba(82, 82, 82, 0.575);
+    padding: .4em .6em .3em;
+    transition: background-color .3s, color .3s;
+}
+
+#next:hover {
+    background-color: rgba(1, 171, 250, 0.781);
+    color: white;
+}
+
+#prev:hover {
+    background-color: rgba(0, 216, 101, 0.781);
+    color: white;
+}
+
+@media (min-width:615px) {
+    header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5em;
+    }
+    h1 {
+        align-self: flex-start;
+    }
+    .sortBox {
+        margin-top: 0;
+    }
+    .cards {
+        max-width: 560.63px;
+    }
+    .list-options {
+        margin-left: auto;
+    }
+}
+
+@media (min-width:1024px) {
+    .cards {
+        max-width: 840.63px;
+    }
+    h1 {
+        margin-left: 5em;
+    }
+    .list-options {
+        margin-right: 5em;
+    }
 }
