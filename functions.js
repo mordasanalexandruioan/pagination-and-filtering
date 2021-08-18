@@ -62,6 +62,23 @@ function createCardFor(element) {
     loginData.textContent = element.registered.date;
     card.append(loginData);
 
+    let modal = document.getElementsByClassName('modal')[0];
+
+    card.addEventListener('click', (e) => {
+
+        removeCards(modal);
+        createCardForModal(element);
+
+        let obj = e.target;
+
+        if (obj.id == "next") {
+            removeCards(modal);
+            createCardForModal(element.nextSibling);
+        }
+
+
+    })
+
     return card;
 }
 
@@ -127,7 +144,7 @@ function searchByName(text, carduri) {
     for (let i = 0; i < carduri.length; i++) {
         cards = document.querySelector('.cards');
 
-        if (carduri[i].name.first.includes(text) == true) {
+        if (carduri[i].name.first.toLowerCase().includes(text) == true) {
             cards.append(createCardFor(carduri[i]));
         }
 
@@ -450,27 +467,40 @@ let eventWindowResize = e => {
 
 
 
-/*model events*/
-let cardClick = e => {
-    let obj = e.target;
 
-    let modal = document.getElementsByClassName('modal')[0];
-
-    if (obj.className == "card") {
-
-        modal.style.display = "flex";
-
-        modal.append(clickOnCard(obj));
-
-    }
-
-}
 
 /*modal function - click*/
 
-function clickOnCard(obj) {
+function createCardForModal(obj) {
+    let card = document.createElement('div');
+    card.className = "card";
 
-    let card = createCardFor(obj);
+    let avatar = document.createElement('img');
+    avatar.src = obj.picture.medium;
+    card.append(avatar);
+
+    let name = document.createElement('span');
+    name.className = "name";
+    name.textContent += obj.name.first;
+    name.textContent += " ";
+    name.textContent += obj.name.last;
+    card.append(name);
+
+    let email = document.createElement('span');
+    email.className = "mail";
+    email.textContent = obj.email;
+    card.append(email);
+
+    let hr = document.createElement('hr');
+    card.append(hr);
+
+    let loginData = document.createElement('span');
+    loginData.className = "data";
+    loginData.textContent = obj.registered.date;
+    card.append(loginData);
+
+
+
 
     let closeCard = document.createElement('button');
     closeCard.id = "closeCard";
@@ -489,6 +519,9 @@ function clickOnCard(obj) {
     prev.append(prevIcon);
     arrowsSection.append(prev);
 
+
+    prevIcon.addEventListener('click', leftArrow);
+
     let next = document.createElement('button');
     next.id = "next";
 
@@ -499,6 +532,75 @@ function clickOnCard(obj) {
     arrowsSection.append(next);
     card.append(arrowsSection);
 
+    nextIcon.addEventListener('click', rightArrow);
 
-    return card;
+
+    let modal = document.getElementsByClassName('modal')[0];
+    modal.style.display = "flex";
+    modal.append(card);
+
+
+}
+
+/*modal events*/
+
+let eventCloseModal = e => {
+    let obj = e.target;
+    if (obj.id == "closeCard") {
+        modal.style.display = "none";
+        removeCards(modal);
+    }
+
+}
+
+function next(objName, data) {
+    for (let i = 0; i < data.length - 1; i++) {
+        if (data[i].name.first.includes(objName) == true) {
+            return data[i + 1];
+        }
+    }
+    return null;
+}
+
+function prev(objName, data) {
+    for (let i = 0; i < data.length - 1; i++) {
+        if (data[i].name.first.includes(objName) == true || data[i].name.last.includes(objName) == true) {
+            return data[i - 1];
+        }
+    }
+    return null;
+}
+
+const leftArrow = (e) => {
+    let obj = e.target;
+    let text = obj.parentNode.parentNode.parentNode.children[1].textContent;
+
+    console.log(text);
+
+    if (text.includes(" ") == true) {
+        text = text.substring(0, 3);
+    }
+
+    let o = prev(text, data);
+
+    let modal = document.getElementsByClassName('modal')[0];
+    removeCards(modal);
+    createCardForModal(o);
+}
+
+const rightArrow = (e) => {
+    let obj = e.target;
+    let text = obj.parentNode.parentNode.parentNode.children[1].textContent;
+
+    console.log(text);
+
+    if (text.includes(" ") == true) {
+        text = text.substring(0, 3);
+    }
+
+    let o = next(text, data);
+
+    let modal = document.getElementsByClassName('modal')[0];
+    removeCards(modal);
+    createCardForModal(o);
 }

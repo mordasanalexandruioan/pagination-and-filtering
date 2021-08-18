@@ -26,7 +26,9 @@ descendingDate.addEventListener('click', eventSortByDateDescending);
 search.addEventListener('input', eventSearch);
 
 
-cards.addEventListener('click', cardClick);
+modal.addEventListener('click', eventCloseModal);
+
+modal.children[0].addEventListener('click', leftArrow);
 
 
 window.addEventListener('resize', eventWindowResize);
