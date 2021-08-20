@@ -553,6 +553,8 @@ let eventCloseModal = e => {
 
 }
 
+/*next and prev functions*/
+
 function next(objName, data) {
     for (let i = 0; i < data.length - 1; i++) {
         if (data[i].name.first.includes(objName) == true) {
@@ -577,9 +579,7 @@ const leftArrow = (e) => {
 
     console.log(text);
 
-    if (text.includes(" ") == true) {
-        text = text.substring(0, 3);
-    }
+    text = substringText(text);
 
     let o = prev(text, data);
 
@@ -594,13 +594,21 @@ const rightArrow = (e) => {
 
     console.log(text);
 
-    if (text.includes(" ") == true) {
-        text = text.substring(0, 3);
-    }
+    text = substringText(text);
 
     let o = next(text, data);
 
     let modal = document.getElementsByClassName('modal')[0];
     removeCards(modal);
     createCardForModal(o);
+}
+
+/*substring text*/
+
+function substringText(text) {
+    for (let i = 0; i < text.length; i++) {
+        if (text[i] == " ") {
+            return text.substring(0, i);
+        }
+    }
 }
